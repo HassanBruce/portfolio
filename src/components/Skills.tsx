@@ -1,29 +1,23 @@
 import Section from "./Section";
+import Reveal from "./Reveal";
+import SkillCard from "./SkillCard";
 import { skills } from "@/data/portfolio";
 
 export default function Skills() {
+  const total = skills.reduce((n, g) => n + g.items.length, 0);
+
   return (
-    <Section id="skills" eyebrow="03 / Toolbox" title="Skills & stack">
-      <div className="grid gap-6 sm:grid-cols-2">
-        {skills.map((group) => (
-          <div
-            key={group.category}
-            className="rounded-2xl border border-border bg-card p-6"
-          >
-            <h3 className="font-mono text-sm text-accent-2">
-              {group.category}
-            </h3>
-            <div className="mt-4 flex flex-wrap gap-2">
-              {group.items.map((item) => (
-                <span
-                  key={item}
-                  className="rounded-lg border border-border px-3 py-1.5 text-sm text-foreground/90"
-                >
-                  {item}
-                </span>
-              ))}
-            </div>
-          </div>
+    <Section
+      id="skills"
+      eyebrow="03 / Toolbox"
+      title="Skills & stack"
+      intro={`${total} technologies across ${skills.length} domains — the tools I reach for, from the browser down to the database. Hover a card.`}
+    >
+      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {skills.map((group, i) => (
+          <Reveal key={group.category} delay={(i % 3) * 70}>
+            <SkillCard category={group.category} items={group.items} />
+          </Reveal>
         ))}
       </div>
     </Section>
